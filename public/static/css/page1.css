@@ -1,0 +1,193 @@
+*{
+	margin: 0;
+	padding: 0;
+
+}
+.container{
+	align-content: center;
+	}
+.topnav{
+	width:100%;
+	height: 80px;
+	z-index: 1000;
+	background-color: rgba(255,255,255,0.95);
+	border-color: #f0f0f0;
+	float:left;
+
+}
+.navimg{
+	width: 200px;
+	height: 80px;
+	border: 1px solid black;
+	float:left;
+}
+.fullwidthimg{
+	width: 100%;
+}
+.navbar{
+	float:left;
+
+}
+.navbarmeal{
+	margin-left: 15px;
+	margin-top: 15px;
+}
+.navbar li{
+	font-size: 16px;
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+	margin-right: 20px;
+}
+.navbar li a{
+	display: inline-block;
+	line-height: 30px;
+	font-size: 14px;
+	color: #999;
+	text-decoration: none;
+	width:100%;
+}
+.topnav>ul>li>a:link {color: #999;}      /* 未访问链接*/
+.topnav>a:visited {color: #999;}  /* 已访问链接 */
+.topnav a:hover {color:black;background-color:rgb(238,238,238);}  /* 鼠标移动到链接上 */
+.topnav>a:active {color:black;}  /* 鼠标点击时 */
+
+.topnav li:hover{
+	background-color: rgb(238,238,238);;
+	color:black;
+}
+.topnav .li:hover .a:hover{
+	color:white;
+}
+
+.userblock{
+	float:right;
+	display: block;
+}
+userblock li{
+	color: red;
+	font-size: 16px;
+	list-style: none;
+	display: inline-block;
+	padding: 0 30px;
+}
+.userblock li a{
+	display: inline-block;
+	line-height: 30px;
+	font-size: 14px;
+	color: #999;
+	text-decoration: none;
+}
+.box{
+	width: 100%;
+	height: 450px;
+	margin: 10px auto;
+	position: relative;
+	margin-bottom: 100px;
+	padding: 0;
+}
+
+.img{
+	height: 100%;
+	padding: 0;
+}
+
+.goods{
+	padding: 10px;
+
+    margin-top:80px;
+}
+.good {
+	margin: 30px;
+	height: 300px;
+	width: 250px;
+
+	border:1px grey solid;
+}
+.goodimg{
+	height: 200px;
+	width: 236px;
+	padding: 5px;
+}
+.goodname{
+	font-size: 20px;
+	height: 56px;
+	width: 250px;
+}
+.goodprice{
+	height: 26px;
+	padding:4px;
+}
+
+.goodbody{
+	margin:30px;
+	margin-top:180px;
+	height: 500px;
+	background-color:lightyellow;
+}
+
+.gooddetailimg{
+	width:400px;
+	height:440px;
+	padding:30px;
+	float:left;
+}
+.gooddetailname{
+	font-size: 30px;
+	height:90px;
+}
+.gooddetailmiddle{
+	margin-left: 80px;
+	margin-top:30px;
+	width:600px;
+	height:50px;
+	float:left;
+}
+.gooddetailprice{
+	padding-top: 14px;
+	padding-left: 38px;
+	height:50px;
+	font-size: 28px;
+}
+.gooddetailcount{
+	padding-top: 14px;
+	padding-left: 38px;
+	height:50px;
+	font-size: 28px;
+}
+.cart{
+	margin-top: 200px;
+    text-align: center;
+}
+.onegood{
+	width:80%;
+	height: 80px;
+	display: inline-block;
+}
+.cartgoodname{
+	display: inline-block;
+}
+.cartgoodprice{
+	display: inline-block;
+}
+.cartgoodnum{
+	display: inline-block;
+}
+.cartgooddelete{
+    display: inline-block;
+}
+.totalprice{
+    text-align: center;
+}
+.carttoorder{
+    text-align: center;
+}
+.addresstextarea{
+    width: 435px;
+    height: 156px;
+}
+.orderbuyerinfo{
+	margin-top: 80px;
+	text-align: center;
+}
+

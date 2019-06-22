@@ -1,0 +1,115 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>document</title>
+</head>
+<body>
+	<h1>这里是index</h1>
+	<switch--
+	{switch name="Think.get.level"}
+		{case value="1|2"}<p>高级会员</p>{/case}
+		{case value="3"}<p>黄金会员</p>{/case}
+		{case value="4"}<p>钻石会员</p>{/case}
+		{default /}<p>游客</p>
+	{/switch}
+
+	{range name="Think.get.level" value="1,2,3" type="in"}
+		<p>当前level是1，2，3中的一个</p>
+	{else/}
+		<p>当前level不是1，2，3中的一个</p>
+	{/range}
+	
+	{in name="Think.get.level" value="1,2,3"}
+	{else/}
+	{/in}
+
+	{notin name="Think.get.level" value="1,2,3"}
+	{else/}
+	{/notin}
+
+	{range name="Think.get.level" value="1,10" type="notbetween"}
+		<p>当前level在1-10中</p>
+	{else/}
+		<p>当前level不在1-10中</p>
+	{/range}
+
+	{between name="Think.get.level" value="1,10"}
+	{else/}
+	{/between}
+
+
+	{defined name="APP_PATH"}
+		<p>APP_PATH已经定义</p>
+	{else/}
+		<p>APP_PATH未定义</p>
+	{/defined}
+
+	<--不建议使用if，判断尽量在控制器进行--
+	{if condition="($Think.get.level == 1) AND ($Think.get.id == 10)"}
+		<p>当前的值为1 并且 id=10</p>
+	{else/}
+		<p>当前值不为1或者id不等于10</p>
+	{/if}
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="__JAVASCRIPT__/jquery-1.8.0.js"></script>
+	<script src="/static/javascript/jquery-1.8.0.js"></script>
+	<link href="__JAVASCRIPT__/page1_js.html" type="text/javascript"></link>
+	<link href="__CSS__/page1.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<title>商城主页</title>
+</head>
+<body>
+	<div class="container">
+		<div class="topnav">
+
+			<div class="navbar">
+				<ul class="navbarmeal">
+						<li><a href="">首页</a></li>
+				</ul>
+			</div>
+			<div class="userblock">
+				<ul class="navbar">
+					{if condition="$welcome eq 1"}
+					<li><p>欢迎您！{$username}</p></li>
+					<li><a href="{:url('user/usercenter/index')}">会员中心</a></li>	{/*没写*/}
+					<li><a href="{:url('goods/goods/showcart')}">购物车</a></li>		{/*没写*/}
+					<li><a href="{:url('index/index/logout')}">退出</a></li>					{/*没写*/}
+					{else /}
+					<li><a href="/user/Login/register">注册</a></li>
+					<li><a href="/user/Login/login">登录</a></li>
+					{/if}
+				</ul>
+			</div>
+		</div>
+
+		<div class="lunbotu">
+		</div>
+
+		<div class="goods">
+			<div class="row">
+			{volist name="goodslist" id="data" empty="没有数据"}
+
+			<div class="col-sm-6 col-md-3">
+				<a href="{:url('/goods/goods/goodDetail',['gid'=>$data.gid])}">
+				<div class="thumbnail">
+					<img src="{$data.gimg|htmlspecialchars}"  style="height: 200px; width: 200px; display: block;">
+					<div class="caption">
+						<h3>{$data.gname}</h3>
+						<p>价格：<span>{$data.gprice|htmlspecialchars}</span></p>
+					</div>
+				</div>
+				</a>
+			</div>
+
+			{/volist}
+		</div>
+
+			</div>
+	</div>
+
+</body> 
+</html>

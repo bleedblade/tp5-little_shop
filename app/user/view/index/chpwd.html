@@ -1,0 +1,55 @@
+{extend name="common/base" /}
+{block name='orderbody'}
+
+<div class="ucorderblock">
+
+        <span>请输入新密码（密码格式为4-6位数字、字母组合）：</span><input type="text" id="password1" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入新密码" oninput="passwordcheck()" onblur="passwordcheck()" class="form-control">
+        <br>
+        <span>请重复输入密码（密码格式为4-6位数字、字母组合）：</span><input type="text" id="password2" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请重复输入新密码" oninput="passwordcheck()" onblur="passwordcheck()" class="form-control"><span id="p2id" style="color: red;"></span>
+        <br>
+        <button style="" class="btn btn-default" onclick="chpwd()" id="chpwdbtn">修改密码</button>
+        <br>
+        <span id="changeresult"></span>
+
+</div>
+
+<script>
+    function passwordcheck() {
+        var password1=document.getElementById("password1").value;
+        var password2=document.getElementById("password2").value;
+        if(password1 != password2){
+            $("#p2id").html("重复输入有误！");
+            $("#chpwdbtn").attr("disabled", true);
+        }else if(password1 == password2){
+            $("#p2id").html("");
+            $("#chpwdbtn").attr("disabled", false);
+        }
+    }
+
+    function chpwd() {
+        var password=document.getElementById("password1").value;
+        var url="/user/usercenter/chpwd";
+        var data={'password':password};
+        console.log(data);
+        console.log(password);
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                console.log(res);
+                console.log(res.msg);
+                console.log(res['msg']);
+                $("#changeresult").html(res.msg);
+            },
+            'error':function (res) {
+                console.log(res);
+                console.log(res.msg);
+                console.log(res['msg']);
+                $("#changeresult").html(res.msg);
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+</script>
+{/block}

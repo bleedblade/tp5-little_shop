@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="__JAVASCRIPT__/jquery-1.8.0.js"></script>
+    <script src="/static/javascript/jquery-1.8.0.js"></script>
+    <link href="__JAVASCRIPT__/page1_js.html" type="text/javascript"></link>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="__CSS__/page1.css" rel="stylesheet" type="text/css" />
+    <title>{block name="head"}商城{/block}</title>
+</head>
+<body>
+<div class="container">
+    <div class="topnav">
+
+
+        <div class="navbar">
+            <ul class="navbarmeal">
+                <li><a href="{:url('index/index/index')}">首页</a></li>
+            </ul>
+        </div>
+        <div class="userblock">
+            <ul class="navbar">
+            {if condition="$welcome eq 1"}
+            <li><p>欢迎您！{$username}</p></li>
+            <li><a href="{:url('user/usercenter/index')}">会员中心</a></li>
+            <li><a href="{:url('goods/goods/showcart')}">购物车</a></li>		{/*没写*/}
+            <li><a href="{:url('index/index/logout')}">退出</a></li>
+            {else /}
+            <li><a href="/user/Login/register">注册</a></li>
+            <li><a href="/user/Login/login">登录</a></li>
+            {/if}
+            </ul>
+        </div>
+
+
+    </div>
+    {block name="body"}
+    {/block}
+</div>
+</body>
+</html>

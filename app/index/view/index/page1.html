@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/static/javascript/jquery-1.8.0.js"></script>
+	<link href="__JAVASCRIPT__/page1_js.html" type="text/javascript"></link>
+	<link href="__CSS__/page1.css" rel="stylesheet" type="text/css" />
+	<title>商城主页</title>
+</head>
+<body>
+	<div class="container">
+		<div class="topnav">
+			<div class="navimg"><img src="" class="fullwidthimg"></div>
+			<div class="navbar">
+				<ul class="navbarmeal">
+						<li><a href="">首页01</a></li>
+						<li><a href="">首页02</a></li>
+						<li><a href="">首页03</a></li>
+						<li><a href="">首页04</a></li>
+				</ul>
+			</div>
+
+			<div class="userblock">
+				<a href="">登录</a>
+			</div>
+		</div>
+
+		<div class="lunbotu">
+		</div>
+		{volist name="list" id="vo" empty="没有数据"}
+		<div class="goods">
+			<div class="good">
+				<div class="goodimg">
+					<img src="">
+				</div>
+				<div class="goodname"><span>{vo.count}}</span></div>
+				<div class="goodprice"><span>{vo.gprice}</span></div>
+			</div>
+
+		</div>
+		{/volist}
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</body>
+</html>
+                  

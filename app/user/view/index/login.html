@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+</head>
+<body>
+<div class="loginblock">
+	<h1>用户登录</h1>
+	<form method="POST" action="/user/Login/login">{/*这里直接这样写就可以了，不建议使用../的相对路径写法，二级目录时会产生歧义报错*/}
+		<input type="text" name="username" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入用户名">
+		<br>
+		<input type="text" name="password" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入密码">
+		<br>
+		<input type="text" name="captcha" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码"  style="width: 200px;"/>
+		<img src="/user/login/show_captcha" alt="" width="121" height="32" onclick="this.src=this.src+'?'"/>
+		<input type="submit" value="登录">
+		<a href="{:url(\'/user/login/register'\)}">去注册</a>
+	</form>
+</div>
+
+
+<!--<form class="form-horizontal">-->
+<!--	<div class="form-group">-->
+<!--		<label class="col-sm-2 control-label">用户名</label>-->
+<!--		<div class="col-sm-10">-->
+<!--			<input type="text" class="form-control" name="username" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入用户名">-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<div class="form-group">-->
+<!--		<label class="col-sm-2 control-label">密码</label>-->
+<!--		<div class="col-sm-10">-->
+<!--			<input type="password" class="form-control"name="password" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入密码">-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	<div class="input-group">-->
+<!--		<input type="text" class="form-control"name="captcha" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" aria-describedby="basic-addon2">-->
+<!--		<img src="/user/login/show_captcha" id="basic-addon2" alt="" width="121" height="32" onclick="this.src=this.src+'?'"/>-->
+<!--	</div>-->
+<!--	<input type="submit" value="登录">-->
+<!--	<a href="{:url(\'/user/login/register'\)}">去注册</a>-->
+<!--</form>-->
+</body>
+
+
+
+<script>
+	// function capcheck(){
+	// 	var url="/user/Login/login";
+	// 	var data=
+	// }
+</script>
+</html>

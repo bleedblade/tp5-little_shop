@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>注册</title>
+	<script src="/static/javascript/jquery-1.8.0.js"></script>
+</head>
+<body>
+<div class="container">
+	<h1>欢迎注册</h1>
+	<form method="POST" action="{url('Login/register')}">
+		<input type="text" name="username" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入用户名" id="registerusername" onblur="usernameexist(this.value)"><span id="usernameexist" style="color: red"></span><span id="usernamenoexist" style="color: green"></span>
+		<br>
+		<input type="text" name="password" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入密码">
+		<br>
+		<input type="text" class="input" name="captcha" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码"  style="width: 200px;"/>
+		<img src="/user/login/show_captcha" alt="" width="121" height="32" class="passcode" onclick="this.src=this.src+'?'"/>
+		<input type="submit" value="提交">
+		<a href="{:url(\'/user/login/login'\)}">去登录</a>
+	</form>
+</div>
+</body>
+<script>
+	function usernameexist(username)
+	{
+		var url="/user/login/usernameexist";
+		var data={'username':username};
+		console.log(data);
+		$.ajax({
+			'url':url,
+			'data':JSON.stringify(data),
+			'success':function (res) {
+				if(res.errno) {
+					$("#usernameexist").html(res.msg);
+					$("#usernamenoexist").html("");
+					console.log(res);
+				}
+				else{
+					$("#usernameexist").html("");
+					$("#usernamenoexist").html(res.msg);
+					console.log(res);
+				}
+			},
+			'dataType':'json',
+			'type':'post'
+		})
+
+	}
+</script>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/static/javascript/jquery-1.8.0.js"></script>
+    <link href="__JAVASCRIPT__/jquery-1.8.0.js" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="__JAVASCRIPT__/page1_js.html" type="text/javascript"></link>
+    <link href="__CSS__/page1.css" rel="stylesheet" type="text/css" />
+    <link href="__CSS__/uc.css" rel="stylesheet" type="text/css" />
+    <title>{block name="head"}个人中心{/block}</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="topnav">
+        <div class="userblock">
+
+            <ul class="navbar">
+                <li><p>欢迎您！</p></li>
+                <li><a href="{:url('index/index/index')}">商城首页</a></li>
+                <li><a href="{:url('user/usercenter/index')}">会员中心</a></li>
+                <li><a href="{:url('goods/goods/showcart')}">购物车</a></li>		{/*没写。其实写了，留这个方便参考注释*/}
+                <li><a href="{:url('index/index/logout')}">退出</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <!--    <div class="ucbody">-->
+    <!--        <div class="ucleftbardiv">-->
+    <!--            <ul class="ucleftbar">-->
+    <!--                <li><a href="">修改密码</a></li>-->
+    <!--                <li><a href="">我的订单</a></li>-->
+    <!--            </ul>-->
+    <!--        </div>-->
+    <!--        <div class="ucorder">-->
+    <!--            <div>订单</div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <div class="l-main">
+        <div class="menu">
+            <header class="menu__header">
+                <h3 class="menu__header-title">
+                    管理中心</h3>
+            </header>
+            <div class="menu__body">
+                <ul class="nav">
+                    <li class="nav__item"><a href="/admin/index/ordermanage" class="nav__item-link"><i class="fa fa-flag nav__item-icon">
+                    </i><span class="nav__item-text">订单管理</span>> </a>
+                    </li>
+
+                    <ul class = "dropdown-menu navbar-right">
+                        <li><a href = "">全部订单</a></li>
+                        <li><a href = "">待发货订单</a></li>
+                        <li><a href = "">争议订单</a></li>
+                    </ul>
+
+                    <li class="nav__item"><a href="/admin/index/goodmanage" class="nav__item-link"><i class="fa fa-flag nav__item-icon">
+                    </i><span class="nav__item-text">商品管理</span>> </a>
+                    </li>
+
+                    <ul class = "dropdown-menu navbar-right">
+                        <li><a href = "">全部商品</a></li>
+                        <li><a href = "">添加商品</a></li>
+                    </ul>
+
+                    <li class="nav__item"><a href="/admin/index/changepwd" class="nav__item-link"><i class="fa fa-flag nav__item-icon">
+                    </i><span class="nav__item-text">修改密码</span>> </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    {block name='orderbody'}{/block}
+
+    <div id="orderdetailblock" class="white_content">
+        <a href = "javascript:void(0)" onclick="hideorderdetaildata()">X</a>
+        <ul class="list-group">
+
+            <li class="list-group-item">
+                <span class="badge"></span>
+                {
+            </li>
+
+        </ul>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+
+
+</div>
+</body>
+<script>
+    function cancelorder(oid) {
+        var url="/user/usercenter/cancelorder";
+        var data={'oid':oid};
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 1){
+                    alert(res.msg);
+                }else if(res.errno == 0)
+                {
+                    location.reload();
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+
+    }
+
+    function receiveorder(oid) {
+        var url="/user/usercenter/receiveorder";
+        var data={'oid':oid};
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 1){
+                    alert(res.msg);
+                }else if(res.errno == 0)
+                {
+                    location.reload();
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+
+    function showorderdetail(oid) {
+
+        /*var url="/user/usercenter/showorderdetail";
+        var data={'oid':oid};
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 1){
+                    alert(res.msg);
+                }else
+                {
+                    document.getElementById('orderdetailblock').style.display='block';
+                    document.getElementById('fade').style.display='block';
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })*/
+
+    }
+
+    function hideorderdetaildata() {
+        document.getElementById('orderdetailblock').style.display='none';document.getElementById('fade').style.display='none';
+    }
+</script>
+</html>

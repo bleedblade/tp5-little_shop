@@ -1,0 +1,68 @@
+{extend name="common/base" /}
+{block name="head"}商品详情{/block}
+{block name="body"}
+<div">
+
+    <div class="col-xs-6 col-md-3">
+        <a href="#" class="thumbnail">
+            <img src="{$gooddetails['gimg']|htmlspecialchars}" style="height: 200px; width: 200px; display: block;">
+        </a>
+    </div>
+
+    <div class="gooddetailmiddle">
+        <ul class="list-group" style="text-align: center;">
+            <li class="list-group-item">{$gooddetails['gname']|htmlspecialchars}</li>
+            <li class="list-group-item"><span>货号:<span id="gooddetailid">{$gooddetails['gid']|htmlspecialchars}</span></span></li>
+            <li class="list-group-item"><span>单价:{$gooddetails['gprice']|htmlspecialchars}</span></li>
+        </ul>
+        <div class="col-lg-6" style="margin:auto;">
+            <div class="input-group" style="margin-left: -15px;">
+                <input type="text" class="form-control" placeholder="请输入数量" value="1" size="4" id="goodgcount" name="goodgcount">
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="addCart()">加入购物车</button>
+      </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div>
+
+</div>
+<script>
+    function addCart() {
+        var url="/goods/goods/tocart";
+        if(parseInt(document.getElementById("goodgcount").value)>9999){
+            alert("请输入1-9999之间的数字！")
+            return false;
+        }
+        var data={
+            "gid":parseInt($("#gooddetailid").html()),
+            "num":parseInt(document.getElementById("goodgcount").value)
+        };
+        //alert(JSON.stringify(data));
+        console.log(data);
+        console.log(data['gid']);
+        console.log(data['num']);
+        console.log(JSON.stringify(data));
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                alert(res.msg);
+            },
+            'dataType':'json',
+            'type':'post'
+        });
+        // $.post(url,JSON.stringify(data),success,"json");
+        // var success = function (response) {
+        //     alert("成功");
+        // }
+
+        // $.post("/goods/goods/tocarttest",{
+        //     "gid":parseInt($("#gooddetailid").html()),
+        //     "num":parseInt(document.getElementById("goodgcount").value)
+        // },'json')
+
+
+    }
+
+</script>
+{/block}

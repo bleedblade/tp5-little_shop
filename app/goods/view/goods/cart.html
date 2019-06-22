@@ -1,0 +1,73 @@
+{extend name="common/base" /}
+{block name="head"}购物车{/block}
+
+
+{block name="body"}
+
+
+
+    <div class="cart">
+
+    <ul class="list-group">
+        {volist name="cart" id="data" empty="$empty"}
+        <div><li class="list-group-item" id="onegood{$data.gid|htmlspecialchars}">
+            <span class="badge">单价：{$data.gprice|htmlspecialchars}</span>
+            {$data.gname|htmlspecialchars}
+            <div><span>数量：</span><input id="cartgoodnum{$data.gid}" onblur="changeCartNum('{$data.gid}',this.value)" value="{$data.num}"><button class="btn" onclick="deletegood('{$data.gid}')">删除</button></div>
+    </li></div>
+
+        {/volist}
+    </ul>
+</div>
+    <div class="totalprice">价格合计：<span class="totalpricetext" id="totalpricetext">{$total_price}</span></div>
+
+    {present name="data"}<div class="carttoorder"><button class="btn btn-default" onclick="location='{:url(\'goods/goods/carttoorder\')}'">生成订单</button></div>{/present}
+
+<script>
+    function changeCartNum(gid,num) {
+        var url="/goods/goods/changecartnum";
+        var data={'gid':parseInt(gid),'num':parseInt(num)};
+        console.log(parseInt(num));
+        console.log(parseInt(gid));
+        var success = function (res){
+            alert(res.msg);
+        }
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.msg) {
+                    console.log(res);
+                    alert(res.msg);
+                }
+                $("#totalpricetext").html(res.total_price);
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+
+    function deletegood(gid){
+        var url="/goods/goods/deletecartgood";
+        var data={'gid':parseInt(gid)};
+        console.log(gid);
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 1){
+                    console.log("if");
+                    console.log(res.errno);
+                    $("#onegood"+gid).remove();
+                    alert(res.msg);
+                    $("#totalpricetext").html(res.total_price);
+                    location.reload();
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+</script>
+
+{/block}

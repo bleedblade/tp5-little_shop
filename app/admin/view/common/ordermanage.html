@@ -1,0 +1,80 @@
+{extend name="common/base" /}>
+
+{block name='orderbody'}
+<script src="/static/layer/layer.js"></script>
+
+<div class="ucorder">
+    <div class="ucleftbardiv">
+        <ul class="ucorderbar">
+            <li><a href="{:url('admin/index/ordermanage')}" onclick="showorder(0)">全部订单</a></li>
+            <li><a href="{:url('admin/index/showorder1')}" onclick="sholorder(1)">待发货</a></li>
+            <li><a href="{:url('admin/index/showorder3')}" onclick="showorder(1)">已收货</a></li>
+            <li><a href="{:url('admin/index/showorder4')}" onclick="showorder(1)">异常订单</a></li>
+        </ul>
+    </div>
+    {volist name="data" id="data" empty="$empty"}
+    <div class="ucorderblock">
+        <div class="uconeorder">
+            <a href="javascript:void(0);" class="alist" data-id="{$data.oid}">
+            <div class="ucorderid"><span class="icorderidtext">订单号：</span><span class="icorderidtext">{$data.oid}</span></div>
+            <div><span>收货人：</span><span>{$data.buyer|htmlspecialchars}</span></div>
+            <div><span>收货地址：</span><span>{$data.address|htmlspecialchars}</span></div>
+            <div><span>联系方式：</span><span>{$data.phone|htmlspecialchars}</span></div>
+            <div><span>金额：</span><span>{$data.cost}</span></div>
+            <div><span>订单状态：</span><span>{$data.status}</span></div>
+            <div><span>创建时间：</span><span>{$data.create_time}</span></div></a>
+            <div>
+                {if condition="$data['status'] eq '已提交'"}
+                <button class="btn btn-default" onclick="cancelorder('{$data.oid}')">取消订单</button><button class="btn btn-default" onclick="sendorder('{$data.oid}')">发货</button>
+                {elseif condition="$data['status'] eq '已发货'"/}
+                <button class="btn btn-default" onclick="cancelorder('{$data.oid}')">取消订单</button>
+                {elseif condition="$data['status'] eq '已收货'"/}
+                <button class="btn btn-default" onclick="cancelorder('{$data.oid}')">取消订单</button>
+                {elseif condition="$data['status'] eq '取消订单中'"/}
+                {/if}
+            </div>
+        </div>
+        {/volist}{$page}
+    </div>
+
+</div>
+
+<script>
+    $(function(){
+        $('.alist').click(function () {
+            var id = $(this).attr('data-id');
+            var index = layer.load(0, {shade: false});
+            $.get('/admin/index/getItem',{id:id},function(res){
+                layer.close(index);
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: res
+                });
+            });
+        });
+    });
+
+
+    function sendorder(oid) {
+        var url="/admin/index/sendorder";
+        var data={'oid':oid};
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 1){
+                    alert(res.msg);
+                }else if(res.errno == 0)
+                {
+                    location.reload();
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+
+    }
+</script>
+{/block}

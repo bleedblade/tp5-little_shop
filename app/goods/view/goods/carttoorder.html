@@ -1,0 +1,61 @@
+{extend name="common/base" /}
+{block name="head"}确认下单{/block}
+
+
+{block name="body"}
+
+<?php
+session_start();?>
+
+<div class="cart">
+{volist name="cart" id="data" empty="$empty"}
+    <div><li class="list-group-item" id="onegood{$data.gid}|htmlspecialchars">
+        <span class="badge">单价：{$data.gprice|htmlspecialchars}</span>
+        <span class="badge">数量：{$data.num|htmlspecialchars}</span>
+        {$data.gname|htmlspecialchars}
+    </li></div>
+{/volist}
+</div>
+
+<div class="orderbuyerinfo">
+    <div class="cartgoodimg">收货人：<input placeholder="请输入收货人姓名" id="buyer"> 联系电话：<input placeholder="请输入联系电话" id="phone" pattern="[0-9]{8,13}"></div>
+    <div class="cartgoodimg"><h5>详细收货地址</h5><textarea class="addresstextarea" placeholder="请输入详细地址" id="address"></textarea></div>
+    <input type="hidden" id="token" value="{$token}">
+</div>
+<button class="btn btn-default btn-lg btn-block" onclick="createorder()">提交订单</button>
+
+
+<script>
+    function createorder(){
+        var url="/index/sell/createorder";
+        var data={
+            'buyer':document.getElementById("buyer").value,
+            'phone' : document.getElementById("phone").value,
+            'address' : document.getElementById("address").value,
+            'token': document.getElementById("token").value
+        };
+        console.log(url);
+        console.log(token);
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                console.log("成功");
+                console.log(res);
+                console.log(res.errno);
+                if(res.errno == 1){
+                    console.log("错误");
+                    alert(res.msg);
+                }
+                if(res.errno == 0){
+                    alert(res.msg);
+                    console.log(res);
+                    location.href="/index/index/index";
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+</script>
+{/block}

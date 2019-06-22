@@ -1,0 +1,131 @@
+{extend name="common/base" /}>
+
+{block name='orderbody'}
+<div class="ucorder">
+<div class="ucleftbardiv">
+    <ul class="ucorderbar">
+        <li><a href="{:url('admin/index/goodmanage')}" onclick="showorder(0)">全部商品</a></li>
+        <li><a href="{:url('admin/index/addgood')}" onclick="sholorder(1)">添加商品</a></li>
+    </ul>
+</div>
+<div class="uconeorder">
+<form action="/admin/index/addgood" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="exampleInputEmail1">商品名</label>
+        <input type="text" name="gname" class="form-control" id="exampleInputEmail1" placeholder="商品名" onkeyup="value=value.replace(/^(0+)|[\^*<>#%&',;=?$\x22]+/g,'')">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">商品价格</label>
+        <input type="text" name="gprice" class="form-control" id="exampleInputPassword1" placeholder="商品价格" onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">商品库存</label>
+        <input type="text" name="gcount" class="form-control" placeholder="商品库存" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">商品图片上传</label>
+        <input type="file" name="image" id="file_input" accept="image/*" onchange="checkFile()">
+        <img src="" class="uploadimg" id="uploadimg">
+    </div>
+    <button type="submit" class="btn btn-default" id="addgoodbtn" disabled="disabled">添加商品</button>
+</form>
+</div>
+</div>
+
+<script type="text/javascript">
+    function uploadImg(event) {
+        var e = window.event || event;
+        var oFile = e.target.files[0];
+        //console.log(oFile);
+        var imgMaxSize = 1024 * 1024 * 4; //4MB
+        // 限制文件类型
+        if(['jpeg', 'png', 'gif', 'jpg'].indexOf(oFile.type.split("/")[1]) < 0) {
+            alert("仅可以上传图片格式文件");
+            return;
+        }
+        //限制大小
+        if(oFile.size > imgMaxSize) {
+            alert("文件最大为4MB");
+            return;
+        }
+        var data=new FormData();
+        data.append("filesData",file);//这里不管怎样，我决定还是用formdata的方式上传。
+        $.post("/admin/index/addgood",data,function(result){
+            console.log(result);
+        })
+    }
+
+    // function showimg() {
+    //     var file = context.files[0];
+    //     var imageType = /^image\//; //是否是图片
+    //     if (!imageType.test(file.type))
+    //     {
+    //     alert("请选择图片！");
+    //     return;
+    //     }
+    //     // 读取完成
+    //     reader.onload = function(e)
+    //     {
+    //     var editImg=document.getElementById('uploadimg');
+    //     editImg.style.display='block';
+    //     editImg.setAttribute('src', e.target.result);
+    //     };
+    //     reader.readAsDataURL(file);
+    // }
+    $("input[type='file']").change(function(){
+        var file = this.files[0];
+        if (window.FileReader)
+        {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e)
+            {
+                $(".uploadimg").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                console.log(e.target.result);
+            };
+        }
+    });
+
+    function checkFile() {
+        var file = document.getElementsByName('image')[0].value;
+        if (file == null || file == "") {
+            alert("请选择要上传的文件!");
+            $("#addgoodbtn").attr("disabled", true);
+            return false;
+        }
+        //定义允许上传的文件类型
+        var allow_ext = ".jpg|.png|.gif|.jpeg";
+        //提取上传文件的类型
+        var ext_name = file.substring(file.lastIndexOf("."));
+        //判断上传文件类型是否允许上传
+        if (allow_ext.indexOf(ext_name + "|") == -1) {
+            var errMsg = "该文件不允许上传，请上传" + allow_ext + "类型的文件,当前文件类型为：" + ext_name;
+            $("#addgoodbtn").attr("disabled", true);
+            alert(errMsg);
+            return false;
+        }
+        $("#addgoodbtn").attr("disabled", false);
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/block}

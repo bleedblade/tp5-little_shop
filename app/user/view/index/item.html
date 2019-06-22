@@ -1,0 +1,12 @@
+<table class="table">
+    <tr>
+        <th>商品名</th>
+        <th>数量</th>
+    </tr>
+    {volist name="data" id="data"}
+    <tr>
+        <td>{$data.gname|htmlspecialchars}</td>
+        <td>{$data.num|htmlspecialchars}</td>
+    </tr>
+    {/volist}
+</table>

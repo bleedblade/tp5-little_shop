@@ -1,0 +1,149 @@
+{extend name="common/base" /}>
+
+{block name='orderbody'}
+
+<div class="ucorder">
+    <div class="ucleftbardiv">
+        <ul class="ucorderbar">
+            <li><a href="{:url('admin/index/goodmanage')}" onclick="showorder(0)">全部商品</a></li>
+            <li><a href="{:url('admin/index/addgood')}" onclick="sholorder(1)">添加商品</a></li>
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-group" style="margin-right: -76%;margin-left: 52%;">
+            <input type="text" class="form-control" placeholder="搜索：商品名" name="kw" id="kw">
+            <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="sbtn">Go!</button>
+      </span>
+        </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+
+
+
+<!--    <div class="col-lg-6 center-block">-->
+<!--        <div class="input-group" style="margin-left: 20px;">-->
+<!--            <input type="text" class="form-control" placeholder="Search for...">-->
+<!--            <span class="input-group-btn">-->
+<!--        <button class="btn btn-default" type="button">Go!</button>-->
+<!--      </span>-->
+<!--        </div>&lt;!&ndash; /input-group &ndash;&gt;-->
+<!--    </div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
+
+
+
+
+
+    {volist name="data" id="data" empty="$empty"}
+
+    <div class="ucorderblock" id="onegood{$data.gid}">
+        <div class="uconeorder">
+
+            <div class="ucorderid"><span class="icorderidtext">商品号：</span><span class="icorderidtext">{$data.gid}</span></div>
+            <div><span>商品名：</span><input class="form-control" id="gid{$data.gid}" onblur="changeGoodName('{$data.gid}',this.value)" value="{$data.gname}"></div>
+            <div><span>定价：</span><input class="form-control" id="gprice{$data.gid}" onblur="changeGoodPrice('{$data.gid}',this.value)" value="{$data.gprice}"></div>
+                <div><span>库存：</span><input class="form-control" id="gprice{$data.gcount}" onblur="changeGoodNum('{$data.gid}',this.value)" value="{$data.gcount}"></div>
+
+            <div class="cartgooddelete"><button class="btn" onclick="deletegood('{$data.gid}')">删除</button></div>
+    </div>
+    </div>
+    {/volist}
+</div>
+
+
+<script>
+    window.onload = function () {
+        var sbtn =  document.getElementById('sbtn');
+        var kw =  document.getElementById('kw');
+        sbtn.onclick = function () {
+            window.location.href="/admin/index/goodmanage?kw="+kw.value
+        }
+        
+    }
+
+    function changeGoodPrice(gid,price) {
+        var url="/admin/index/changegoodprice";
+        var data={'gid':parseInt(gid),'price':price};
+        console.log(parseInt(price));
+        console.log(parseInt(gid));
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.msg) {
+                    console.log(res);
+                    alert(res.msg);
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+
+    function changeGoodNum(gid,num) {
+        var url="/admin/index/changegoodnum";
+        var data={'gid':parseInt(gid),'num':parseInt(num)};
+        console.log(parseInt(num));
+        console.log(parseInt(gid));
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.msg) {
+                    console.log(res);
+                    alert(res.msg);
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+
+    function changeGoodName(gid,name) {
+        var url="/admin/index/changegoodname";
+        var data={'gid':parseInt(gid),'name':name};
+        console.log(parseInt(name));
+        console.log(parseInt(gid));
+        var success = function (res){
+            alert(res.msg);
+        }
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.msg) {
+                    console.log(res);
+                    alert(res.msg);
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+    function deletegood(gid){
+        var url="/admin/index/deletegood";
+        var data={'gid':parseInt(gid)};
+        console.log(gid);
+        $.ajax({
+            'url':url,
+            'data':JSON.stringify(data),
+            'success':function (res) {
+                if(res.errno == 0){
+                    console.log("if0");
+                    console.log(res.errno);
+                    console.log(gid);
+                    $("#onegood"+gid).remove();
+                    alert(res.msg);
+                    location.reload();
+                }
+                if(res.errno == 1){
+                    console.log("if1");
+                    console.log(res.errno);
+                    alert(res.msg);
+                }
+            },
+            'dataType':'json',
+            'type':'post'
+        })
+    }
+</script>
+{/block}

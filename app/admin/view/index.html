@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录</title>
+</head>
+<body>
+<div class="loginblock">
+    <h1>用户登录</h1>
+    {/*这里直接这样写就可以了，不建议使用../的相对路径写法，二级目录时会产生歧义报错*/}
+        <input type="text" name="username" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入用户名">
+        <br>
+        <input type="text" name="password" pattern="[A-Za-z0-9]{4,6}" required="required" placeholder="请输入密码">
+        <br>
+        <input type="text" name="captcha" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码"  style="width: 200px;"/>
+        <img src="/user/login/show_captcha" alt="" width="121" height="32" onclick="this.src=this.src+'?'"/>
+        <button onclick="window.location.href='/admin/index/ordermanage'">登录</button>
+</div>
